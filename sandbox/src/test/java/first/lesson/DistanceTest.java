@@ -12,5 +12,10 @@ public class DistanceTest {
 
     Assert.assertEquals(a.distance(b), 144.27751037497146);
 
+    Point a2 = new Point(5, 5);
+    Point b2 = new Point(5, 5);
+
+    Assert.assertEquals(a2.distance(b2), 0.0);
+
   }
 }
