@@ -39,4 +39,12 @@ public class ContactHelper extends BaseHelper {
     click(By.cssSelector("[value='Delete']"));
     wd.switchTo().alert().accept();
   }
+
+  public void initContactModification() {
+    click(By.xpath("//*[@title='Edit']"));
+  }
+
+  public void updateContact() {
+    click(By.name("update"));
+  }
 }

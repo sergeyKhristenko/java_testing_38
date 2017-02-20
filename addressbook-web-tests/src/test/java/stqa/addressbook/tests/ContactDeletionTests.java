@@ -12,4 +12,5 @@ public class ContactDeletionTests extends TestBase {
     app.getContactHelper().deleteSelectedContact();
 
   }
+
 }
