@@ -1,7 +1,6 @@
 package stqa.addressbook.appManager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchContextException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -30,8 +29,12 @@ public class ContactHelper extends BaseHelper {
     type(By.name("mobile"), contactData.getMobile());
     type(By.name("email"), contactData.getEmail());
 
-    if(creation){
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    if (creation) {
+      try {
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      } catch (NoSuchElementException ex) {
+        return;
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -57,5 +60,15 @@ public class ContactHelper extends BaseHelper {
 
   public void updateContact() {
     click(By.name("update"));
+  }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.name("selected[]"));
+  }
+
+  public void createContact(ContactData contact) {
+    addContact();
+    fillContactForm(contact, true);
+    saveContact();
   }
 }
