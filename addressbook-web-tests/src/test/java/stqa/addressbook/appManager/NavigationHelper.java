@@ -10,13 +10,14 @@ public class NavigationHelper extends BaseHelper {
   }
 
   public void gotoGroupPage() {
+
     if (isElementPresent(By.tagName("h1"))
-            && wd.findElement(By.xpath("//*[@id=\"content\"]/h1")).getText().equals("Groups")
+            && isElementPresent(By.cssSelector("#content > h1"))
+            && wd.findElement(By.cssSelector("#content > h1")).getText().equals("Groups")
             && isElementPresent(By.name("new"))) {
       return;
     }
     click(By.linkText("groups"));
-
   }
 
   public void gotoHomePage() {
