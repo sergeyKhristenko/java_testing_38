@@ -45,8 +45,9 @@ public class ContactHelper extends BaseHelper {
     click(By.linkText("add new"));
   }
 
-  public void selectContact() {
-    click(By.xpath("//input[@type='checkbox']"));
+  //will select contact by index
+  public void selectContact(int index) {
+    wd.findElements(By.xpath("//input[@type='checkbox']")).get(index).click();
   }
 
   public void deleteSelectedContact() {
@@ -54,8 +55,9 @@ public class ContactHelper extends BaseHelper {
     wd.switchTo().alert().accept();
   }
 
-  public void initContactModification() {
-    click(By.xpath("//*[@title='Edit']"));
+  //choose contact by index
+  public void initContactModification(int index) {
+    wd.findElements(By.cssSelector("[title='Edit']")).get(index).click();
   }
 
   public void updateContact() {
