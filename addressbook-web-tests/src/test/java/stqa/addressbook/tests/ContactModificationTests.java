@@ -34,5 +34,7 @@ public class ContactModificationTests extends TestBase {
 
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
+
+    Assert.assertEquals(after, before);
   }
 }
