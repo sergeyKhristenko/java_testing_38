@@ -23,14 +23,9 @@ public class ContactHelper extends BaseHelper {
 
   public void fillContactForm(ContactData contactData, boolean creation) {
     type(By.name("firstname"), contactData.getName());
-    type(By.name("middlename"), contactData.getMiddleName());
     type(By.name("lastname"), contactData.getLastName());
-    type(By.name("nickname"), contactData.getNickname());
-    type(By.name("title"), contactData.getTitle());
-    type(By.name("company"), contactData.getCompany());
     type(By.name("address"), contactData.getAddress());
     type(By.name("home"), contactData.getHomePhone());
-    type(By.name("mobile"), contactData.getMobile());
     type(By.name("email"), contactData.getEmail());
 
     if (creation) {
@@ -84,10 +79,17 @@ public class ContactHelper extends BaseHelper {
 
   public List<ContactData> getContactList() {
     List<ContactData> contacts = new ArrayList<ContactData>();
-    List<WebElement> elements = wd.findElements(By.cssSelector("[name='entry']>td:nth-child(3)"));
+    List<WebElement> elements = wd.findElements(By.cssSelector("[name='entry']"));
     for (WebElement element : elements) {
-      String name = element.getText();
-      ContactData contact = new ContactData(name, null, null, null, null, null, null, null, null, null, null);
+
+      String name = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
+      String lastName = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
+      String address = element.findElement(By.cssSelector("td:nth-child(4)")).getText();
+      String email = element.findElement(By.cssSelector("td:nth-child(5)")).getText();
+      String homePhone = element.findElement(By.cssSelector("td:nth-child(6)")).getText();
+
+      ContactData contact = new ContactData(name, lastName, address,
+              homePhone, email, null);
       contacts.add(contact);
     }
     return contacts;

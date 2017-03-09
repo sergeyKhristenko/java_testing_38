@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import stqa.addressbook.model.ContactData;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class ContactModificationTests extends TestBase {
@@ -14,9 +15,8 @@ public class ContactModificationTests extends TestBase {
     app.getNavigationHelper().gotoHomePage();
 
     if (!app.getContactHelper().isThereAContact()) {
-      app.getContactHelper().createContact(new ContactData("Test Name", "Middle Name",
-              "Last Name", "Nickname", "Title", "Company",
-              "Address", "Home Phone", "Mobile", "Email", "test1"));
+      app.getContactHelper().createContact(new ContactData("Test Name",
+              "Last Name", "Address", "555555", "Email", "test1"));
 
       app.getNavigationHelper().gotoHomePage();
     }
@@ -26,15 +26,19 @@ public class ContactModificationTests extends TestBase {
     //choose tha last contact
     app.getContactHelper().initContactModification(before.size() - 1);
 
-    app.getContactHelper().fillContactForm(new ContactData("Test Name", "Middle Name",
-            "Last Name", "Nickname", "Title", "Company", "Address",
-            "Home Phone", "Mobile", "Email", null), false);
+    ContactData contact = new ContactData(before.get(before.size() -1).getId(),"Test Name",
+            "Last Name", "Address", "555555", "Email", "test1");
+
+    app.getContactHelper().fillContactForm(contact, false);
     app.getContactHelper().updateContact();
     app.getNavigationHelper().gotoHomePage();
 
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
 
-    Assert.assertEquals(after, before);
+    before.remove(before.size() - 1);
+    before.add(contact);
+
+    Assert.assertEquals(new HashSet<Object>(after), new HashSet<Object>(before));
   }
 }
