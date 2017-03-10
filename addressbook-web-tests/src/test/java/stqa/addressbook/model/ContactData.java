@@ -60,7 +60,6 @@ public class ContactData {
 
   @Override
   public boolean equals(Object o) {
-
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
@@ -68,11 +67,7 @@ public class ContactData {
 
     if (id != that.id) return false;
     if (name != null ? !name.equals(that.name) : that.name != null) return false;
-    if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-    if (address != null ? !address.equals(that.address) : that.address != null) return false;
-    if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
-    if (email != null ? !email.equals(that.email) : that.email != null) return false;
-    return group != null ? group.equals(that.group) : that.group == null;
+    return lastName != null ? lastName.equals(that.lastName) : that.lastName == null;
   }
 
   @Override
@@ -80,10 +75,6 @@ public class ContactData {
     int result = id;
     result = 31 * result + (name != null ? name.hashCode() : 0);
     result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-    result = 31 * result + (address != null ? address.hashCode() : 0);
-    result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
-    result = 31 * result + (email != null ? email.hashCode() : 0);
-    result = 31 * result + (group != null ? group.hashCode() : 0);
     return result;
   }
 
