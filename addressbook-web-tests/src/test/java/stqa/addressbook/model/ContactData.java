@@ -1,7 +1,7 @@
 package stqa.addressbook.model;
 
 public class ContactData {
-  private final String id;
+  private int id;
   private final String name;
   private final String lastName;
   private final String address;
@@ -11,7 +11,7 @@ public class ContactData {
 
   public ContactData(String name, String lastName, String address, String homePhone,
                      String email, String group) {
-    this.id = null;
+    this.id = 0;
     this.name = name;
     this.lastName = lastName;
     this.address = address;
@@ -20,7 +20,7 @@ public class ContactData {
     this.group = group;
   }
 
-  public ContactData(String id, String name, String lastName, String address, String homePhone,
+  public ContactData(int id, String name, String lastName, String address, String homePhone,
                      String email, String group) {
     this.id = id;
     this.name = name;
@@ -35,33 +35,7 @@ public class ContactData {
     return name;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    ContactData that = (ContactData) o;
-
-    if (id != null ? !id.equals(that.id) : that.id != null) return false;
-    if (name != null ? !name.equals(that.name) : that.name != null) return false;
-    if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-    if (address != null ? !address.equals(that.address) : that.address != null) return false;
-    if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
-    return email != null ? email.equals(that.email) : that.email == null;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = id != null ? id.hashCode() : 0;
-    result = 31 * result + (name != null ? name.hashCode() : 0);
-    result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-    result = 31 * result + (address != null ? address.hashCode() : 0);
-    result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
-    result = 31 * result + (email != null ? email.hashCode() : 0);
-    return result;
-  }
-
-  public String getId() {
+  public int getId() {
 
     return id;
   }
@@ -79,6 +53,39 @@ public class ContactData {
             '}';
   }
 
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ContactData that = (ContactData) o;
+
+    if (id != that.id) return false;
+    if (name != null ? !name.equals(that.name) : that.name != null) return false;
+    if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+    if (address != null ? !address.equals(that.address) : that.address != null) return false;
+    if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
+    if (email != null ? !email.equals(that.email) : that.email != null) return false;
+    return group != null ? group.equals(that.group) : that.group == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = id;
+    result = 31 * result + (name != null ? name.hashCode() : 0);
+    result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+    result = 31 * result + (address != null ? address.hashCode() : 0);
+    result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+    result = 31 * result + (email != null ? email.hashCode() : 0);
+    result = 31 * result + (group != null ? group.hashCode() : 0);
+    return result;
+  }
 
   public String getLastName() {
     return lastName;
