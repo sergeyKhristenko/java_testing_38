@@ -19,7 +19,7 @@ public class ContactData {
     this.email = email;
     this.group = group;
   }
-
+ 
   public ContactData(int id, String name, String lastName, String address, String homePhone,
                      String email, String group) {
     this.id = id;
