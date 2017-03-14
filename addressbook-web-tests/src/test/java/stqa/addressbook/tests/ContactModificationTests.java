@@ -3,7 +3,6 @@ package stqa.addressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import stqa.addressbook.model.ContactData;
-import stqa.addressbook.model.GroupData;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -14,13 +13,13 @@ public class ContactModificationTests extends TestBase {
   @Test
   public void testContactModification() {
 
-    app.getNavigationHelper().gotoHomePage();
+    app.goTo().gotoHomePage();
 
     if (!app.getContactHelper().isThereAContact()) {
       app.getContactHelper().createContact(new ContactData("Test Name",
               "Last Name", "Address", "555555", "Email", "test1"));
 
-      app.getNavigationHelper().gotoHomePage();
+      app.goTo().gotoHomePage();
     }
 
     List<ContactData> before = app.getContactHelper().getContactList();
@@ -33,7 +32,7 @@ public class ContactModificationTests extends TestBase {
 
     app.getContactHelper().fillContactForm(contact, false);
     app.getContactHelper().updateContact();
-    app.getNavigationHelper().gotoHomePage();
+    app.goTo().gotoHomePage();
 
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
