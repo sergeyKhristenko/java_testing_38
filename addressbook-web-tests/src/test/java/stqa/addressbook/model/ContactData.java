@@ -2,11 +2,11 @@ package stqa.addressbook.model;
 
 public class ContactData {
   private int id;
-  private final String name;
-  private final String lastName;
-  private final String address;
-  private final String homePhone;
-  private final String email;
+  private String name;
+  private String lastName;
+  private String address;
+  private String homePhone;
+  private String email;
   private String group;
 
   public ContactData(String name, String lastName, String address, String homePhone,
