@@ -1,7 +1,7 @@
 package stqa.addressbook.model;
 
 public class ContactData {
-  private int id;
+  private int id = Integer.MAX_VALUE;
   private String name;
   private String lastName;
   private String address;
@@ -9,26 +9,63 @@ public class ContactData {
   private String email;
   private String group;
 
-  public ContactData(String name, String lastName, String address, String homePhone,
-                     String email, String group) {
-    this.id = 0;
-    this.name = name;
-    this.lastName = lastName;
-    this.address = address;
-    this.homePhone = homePhone;
-    this.email = email;
-    this.group = group;
+
+  public String getName() {
+    return name;
   }
- 
-  public ContactData(int id, String name, String lastName, String address, String homePhone,
-                     String email, String group) {
-    this.id = id;
+
+  public int getId() {
+
+    return id;
+  }
+
+  public ContactData withName(String name) {
     this.name = name;
+    return this;
+  }
+
+  public ContactData withLastName(String lastName) {
     this.lastName = lastName;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
     this.address = address;
+    return this;
+  }
+
+  public ContactData withHomePhone(String homePhone) {
     this.homePhone = homePhone;
+    return this;
+  }
+
+  public ContactData withEmail(String email) {
     this.email = email;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
     this.group = group;
+    return this;
+  }
+
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
+  }
+
+  @Override
+
+  public String toString() {
+    return "ContactData{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", address='" + address + '\'' +
+            ", homePhone='" + homePhone + '\'' +
+            ", email='" + email + '\'' +
+            ", group='" + group + '\'' +
+            '}';
   }
 
   @Override
@@ -47,33 +84,6 @@ public class ContactData {
     int result = name != null ? name.hashCode() : 0;
     result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
     return result;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public int getId() {
-
-    return id;
-  }
-
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "id='" + id + '\'' +
-            ", name='" + name + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", address='" + address + '\'' +
-            ", homePhone='" + homePhone + '\'' +
-            ", email='" + email + '\'' +
-            ", group='" + group + '\'' +
-            '}';
-  }
-
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public String getLastName() {

@@ -16,8 +16,8 @@ public class ContactModificationTests extends TestBase {
     app.goTo().gotoHomePage();
 
     if (!app.getContactHelper().isThereAContact()) {
-      app.getContactHelper().createContact(new ContactData("Test Name",
-              "Last Name", "Address", "555555", "Email", "test1"));
+      app.getContactHelper().createContact(new ContactData().withName("Test Name").withLastName("Last Name")
+              .withAddress("Address").withHomePhone("555555").withEmail("Email").withGroup("test1"));
 
       app.goTo().gotoHomePage();
     }
@@ -27,8 +27,9 @@ public class ContactModificationTests extends TestBase {
     //choose tha last contact
     app.getContactHelper().initContactModification(before.size() - 1);
 
-    ContactData contact = new ContactData(before.get(before.size() -1).getId(),"Test Name",
-            "Last Name", "Address", "555555", "Email", "test1");
+    ContactData contact = new ContactData().withId(before.get(before.size() -1).getId()).withName("Test Name")
+            .withLastName("Last Name").withAddress("Address").withHomePhone("555555").withEmail("Email")
+            .withGroup("test1");
 
     app.getContactHelper().fillContactForm(contact, false);
     app.getContactHelper().updateContact();

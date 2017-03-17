@@ -90,9 +90,8 @@ public class ContactHelper extends BaseHelper {
       String homePhone = element.findElement(By.cssSelector("td:nth-child(6)")).getText();
 
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      ContactData contact = new ContactData(id, name, lastName, address,
-              homePhone, email, null);
-      contacts.add(contact);
+      contacts.add(new ContactData().withId(id).withName(name).withLastName(lastName).withAddress(address)
+              .withHomePhone(homePhone).withEmail(email));
 
     }
     return contacts;
