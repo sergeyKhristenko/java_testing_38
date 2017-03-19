@@ -10,7 +10,9 @@ import stqa.addressbook.model.ContactData;
 import stqa.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends BaseHelper {
 
@@ -50,14 +52,18 @@ public class ContactHelper extends BaseHelper {
     wd.findElements(By.xpath("//input[@type='checkbox']")).get(index).click();
   }
 
+  public void selectContactById(int id) {
+    wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
+  }
+
   public void deleteSelectedContact() {
     click(By.cssSelector("[value='Delete']"));
     wd.switchTo().alert().accept();
   }
 
   //choose contact by index
-  public void initContactModification(int index) {
-    wd.findElements(By.cssSelector("[title='Edit']")).get(index).click();
+  public void initContactModification(int id) {
+    wd.findElement(By.xpath("//tr[.//*[@id='" + id + "']]//*[@title='Edit']")).click();
   }
 
   public void updateContact() {
@@ -74,12 +80,31 @@ public class ContactHelper extends BaseHelper {
     saveContact();
   }
 
+  public void modify(ContactData contact) {
+    initContactModification(contact.getId());
+    fillContactForm(contact, false);
+    updateContact();
+  }
+
+  public void delete(int index) {
+    //select the last contact from the list
+    selectContact(index);
+    deleteSelectedContact();
+  }
+
+  public void delete(ContactData contact) {
+    //select the last contact from the list
+    selectContactById(contact.getId());
+    deleteSelectedContact();
+
+  }
+
   public int getContactCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<ContactData> getContactList() {
-    List<ContactData> contacts = new ArrayList<ContactData>();
+  public Set<ContactData> all() {
+    Set<ContactData> contacts = new HashSet<ContactData>();
     List<WebElement> elements = wd.findElements(By.cssSelector("[name='entry']"));
     for (WebElement element : elements) {
 
@@ -96,4 +121,6 @@ public class ContactHelper extends BaseHelper {
     }
     return contacts;
   }
+
+
 }

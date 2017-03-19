@@ -1,44 +1,39 @@
 package stqa.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import stqa.addressbook.model.ContactData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class ContactDeletionTests extends TestBase {
 
-  @Test
-  public void testContactDeletion() {
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().homePage();
 
-    app.goTo().gotoHomePage();
-
-    if (!app.getContactHelper().isThereAContact()) {
-      app.getContactHelper().createContact(new ContactData().withName("Test Name").withLastName("Last Name")
+    if (app.contact().all().size() == 0) {
+      app.contact().createContact(new ContactData().withName("Test Name").withLastName("Last Name")
               .withHomePhone("555555").withAddress("Address").withEmail("Email").withGroup("test1"));
 
-      app.goTo().gotoHomePage();
+      app.goTo().homePage();
     }
-
-    List<ContactData> before = app.getContactHelper().getContactList();
-
-    //select the last contact from the list
-    app.getContactHelper().selectContact(before.size() - 1);
-
-    app.getContactHelper().deleteSelectedContact();
-    app.goTo().gotoHomePage();
-
-    List<ContactData> after = app.getContactHelper().getContactList();
-
-    Assert.assertEquals(after.size(), before.size() - 1);
-
-    before.remove(before.size() - 1);
-
-    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
   }
+
+  @Test
+  public void testContactDeletion() {
+    Set<ContactData> before = app.contact().all();
+    ContactData deletedContact = before.iterator().next();
+
+    app.contact().delete(deletedContact);
+    app.goTo().homePage();
+    Set<ContactData> after = app.contact().all();
+
+    Assert.assertEquals(after.size(), before.size() - 1); //check contacts length
+    before.remove(deletedContact);
+    Assert.assertEquals(before, after); //check that contacts are equal by names
+  }
+
 
 }
