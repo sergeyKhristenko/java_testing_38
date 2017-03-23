@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import stqa.addressbook.model.ContactData;
+import stqa.addressbook.model.Contacts;
 import stqa.addressbook.model.GroupData;
 
 import java.util.ArrayList;
@@ -103,8 +104,8 @@ public class ContactHelper extends BaseHelper {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public Set<ContactData> all() {
-    Set<ContactData> contacts = new HashSet<ContactData>();
+  public Contacts all() {
+    Contacts contacts = new Contacts();
     List<WebElement> elements = wd.findElements(By.cssSelector("[name='entry']"));
     for (WebElement element : elements) {
 

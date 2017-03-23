@@ -1,14 +1,12 @@
 package stqa.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import stqa.addressbook.model.ContactData;
+import stqa.addressbook.model.Contacts;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactModificationTests extends TestBase {
   @BeforeMethod
@@ -17,7 +15,7 @@ public class ContactModificationTests extends TestBase {
 
     if (app.contact().all().size() == 0) {
       app.contact().createContact(new ContactData().withName("Test Name").withLastName("Last Name")
-              .withAddress("Address").withHomePhone("555555").withEmail("Email").withGroup("test1"));
+              .withAddress("Address").withHomePhone("555555").withEmail("Email").withGroup("Test Group"));
 
       app.goTo().homePage();
     }
@@ -25,23 +23,17 @@ public class ContactModificationTests extends TestBase {
 
   @Test
   public void testContactModification() {
-    Set<ContactData> before = app.contact().all();
-    ContactData modifiedGroup = before.iterator().next();
-    ContactData contact = new ContactData().withId(modifiedGroup.getId()).withName("Test Name")
+    Contacts before = app.contact().all();
+    ContactData modifiedContact = before.iterator().next();
+    ContactData contact = new ContactData().withId(modifiedContact.getId()).withName("Test Name")
             .withLastName("Last Name").withAddress("Address").withHomePhone("555555").withEmail("Email")
-            .withGroup("test1");
+            .withGroup("Test Group");
 
     app.contact().modify(contact);
     app.goTo().homePage();
+    Contacts after = app.contact().all();
 
-    Set<ContactData> after = app.contact().all();
-    Assert.assertEquals(after.size(), before.size());
-
-    before.remove(modifiedGroup);
-    before.add(contact);
-
-    Assert.assertEquals(after, before);
+    assertThat(after.size(), equalTo(before.size()));
+    assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
-
-
 }

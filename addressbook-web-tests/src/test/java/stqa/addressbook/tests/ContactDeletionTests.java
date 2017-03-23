@@ -1,11 +1,12 @@
 package stqa.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import stqa.addressbook.model.ContactData;
+import stqa.addressbook.model.Contacts;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactDeletionTests extends TestBase {
 
@@ -15,7 +16,7 @@ public class ContactDeletionTests extends TestBase {
 
     if (app.contact().all().size() == 0) {
       app.contact().createContact(new ContactData().withName("Test Name").withLastName("Last Name")
-              .withHomePhone("555555").withAddress("Address").withEmail("Email").withGroup("test1"));
+              .withHomePhone("555555").withAddress("Address").withEmail("Email").withGroup("Test Group"));
 
       app.goTo().homePage();
     }
@@ -23,17 +24,14 @@ public class ContactDeletionTests extends TestBase {
 
   @Test
   public void testContactDeletion() {
-    Set<ContactData> before = app.contact().all();
+    Contacts before = app.contact().all();
     ContactData deletedContact = before.iterator().next();
 
     app.contact().delete(deletedContact);
     app.goTo().homePage();
-    Set<ContactData> after = app.contact().all();
+    Contacts after = app.contact().all();
 
-    Assert.assertEquals(after.size(), before.size() - 1); //check contacts length
-    before.remove(deletedContact);
-    Assert.assertEquals(before, after); //check that contacts are equal by names
+    assertThat(after.size(), equalTo(before.size() - 1));
+    assertThat(after, equalTo(before.without(deletedContact)));
   }
-
-
 }
