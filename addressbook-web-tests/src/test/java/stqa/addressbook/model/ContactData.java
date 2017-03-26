@@ -6,6 +6,8 @@ public class ContactData {
   private String lastName;
   private String address;
   private String homePhone;
+  private String mobilePhone;
+  private String workPhone;
   private String email;
   private String group;
 
@@ -38,6 +40,14 @@ public class ContactData {
     this.homePhone = homePhone;
     return this;
   }
+  public ContactData withMobilePhone(String mobilePhone) {
+    this.mobilePhone = mobilePhone;
+    return this;
+  }
+  public ContactData withWorkPhone(String workPhone) {
+    this.workPhone = workPhone;
+    return this;
+  }
 
   public ContactData withEmail(String email) {
     this.email = email;
@@ -54,20 +64,6 @@ public class ContactData {
     return this;
   }
 
-  @Override
-
-  public String toString() {
-    return "ContactData{" +
-            "id='" + id + '\'' +
-            ", name='" + name + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", address='" + address + '\'' +
-            ", homePhone='" + homePhone + '\'' +
-            ", email='" + email + '\'' +
-            ", group='" + group + '\'' +
-            '}';
-  }
-
   public String getLastName() {
     return lastName;
   }
@@ -79,13 +75,15 @@ public class ContactData {
   public String getHomePhone() {
     return homePhone;
   }
+  public String getMobilePhone() {
+    return mobilePhone;
+  }
+  public String getWorkPhone() {
+    return workPhone;
+  }
 
   public String getEmail() {
     return email;
-  }
-
-  public String getGroup() {
-    return group;
   }
 
   @Override
@@ -107,4 +105,24 @@ public class ContactData {
     result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
     return result;
   }
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", address='" + address + '\'' +
+            ", homePhone='" + homePhone + '\'' +
+            ", mobilePhone='" + mobilePhone + '\'' +
+            ", workPhone='" + workPhone + '\'' +
+            ", email='" + email + '\'' +
+            ", group='" + group + '\'' +
+            '}';
+  }
+
+  public String getGroup() {
+    return group;
+  }
+
 }
