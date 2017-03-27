@@ -14,8 +14,12 @@ public class ContactModificationTests extends TestBase {
     app.goTo().homePage();
 
     if (app.contact().all().size() == 0) {
-      app.contact().createContact(new ContactData().withName("Test Name").withLastName("Last Name")
-              .withAddress("Address").withHomePhone("555555").withEmail("Email").withGroup("Test Group"));
+      app.contact().createContact(new ContactData().withName("Test Name")
+              .withLastName("Last Name")
+              .withAddress("Address")
+              .withHomePhone("555555").withMobilePhone("+7 (123) 23-23-232").withWorkPhone("234(234)")
+              .withEmail("test@email.address").withEmail2("test+2@email.address").withEmail3("test+3@email.address")
+              .withGroup("Test Group"));
 
       app.goTo().homePage();
     }
