@@ -10,6 +10,8 @@ import stqa.addressbook.model.ContactData;
 import stqa.addressbook.model.Contacts;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ContactHelper extends BaseHelper {
 
@@ -142,6 +144,33 @@ public class ContactHelper extends BaseHelper {
     return new ContactData().withId(contact.getId()).withName(firstName).withLastName(lastName)
             .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone)
             .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
+  }
+
+  public ContactData infoFromDetailedPage(ContactData contact) {
+    wd.findElement(By.xpath(String.format("//a[@*='view.php?id=%s']", contact.getId()))).click();
+
+    //there is no way to get separate names from detailed page
+    //so this returns all name in one string separated by space
+    String contactName = wd.findElement(By.cssSelector("#content > b")).getText();
+
+    String[] phones = wd.findElement(By.cssSelector("#content")).getText().split("\n");
+
+    String allEmails = wd.findElements(By.cssSelector("#content > a"))
+            .stream()
+            .map(WebElement::getText) //get text from web elements
+            .collect(Collectors.toList()) //create String[] with results
+            .stream()
+            .collect(Collectors.joining("\n")); //concat all result values to string with \n delimiter
+
+    return new ContactData().withAllEmails(allEmails).withHomePhone(parsedPhone(phones, "H"))
+            .withMobilePhone(parsedPhone(phones, "M")).withWorkPhone(parsedPhone(phones, "W"))
+            .withConcatNames(contactName);
+  }
+
+  private String parsedPhone(String[] phones, String phoneType) {
+    //3 options allowed for the phoneType: H (home phone), M (mobile phone), W (work phone)
+    return Stream.of(phones).filter((s) -> s.matches(String.format("%s:.*", phoneType)))
+            .collect(Collectors.joining("\n")).replaceAll(String.format("%s: ", phoneType), "");
   }
 
 
