@@ -149,8 +149,8 @@ public class ContactHelper extends BaseHelper {
   public ContactData infoFromDetailedPage(ContactData contact) {
     wd.findElement(By.xpath(String.format("//a[@*='view.php?id=%s']", contact.getId()))).click();
 
-    //there is no way to get separate names from detailed page
-    //so this returns all name in one string separated by space
+    //there is no way to get separated names from detailed page
+    //so this returns all names in one string separated by space
     String contactName = wd.findElement(By.cssSelector("#content > b")).getText();
 
     String[] phones = wd.findElement(By.cssSelector("#content")).getText().split("\n");
