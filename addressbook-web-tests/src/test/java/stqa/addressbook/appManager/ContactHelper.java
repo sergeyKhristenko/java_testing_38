@@ -33,11 +33,12 @@ public class ContactHelper extends BaseHelper {
     type(By.name("email3"), contactData.getEmail3());
     type(By.name("mobile"), contactData.getMobilePhone());
     type(By.name("work"), contactData.getWorkPhone());
+    attach(By.name("photo"), contactData.getPhoto());
 
     if (creation) {
       try {
         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-      } catch (NoSuchElementException ex) {
+      } catch (NoSuchElementException | NullPointerException ex) {
         return;
       }
     } else {
