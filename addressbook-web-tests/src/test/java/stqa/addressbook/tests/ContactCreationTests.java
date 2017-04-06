@@ -6,7 +6,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import stqa.addressbook.model.ContactData;
 import stqa.addressbook.model.Contacts;
-import stqa.addressbook.model.GroupData;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,9 +40,6 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreation(ContactData contact) {
     File photo = new File("src/test/resources/home-icon.png");
     System.out.println(photo.exists());
-//    ContactData contact = new ContactData().withName("Test Name").withLastName("Last Name").withAddress("Address")
-//            .withHomePhone("555555").withMobilePhone("+7 (123) 23-23-232").withWorkPhone("234(234)")
-//            .withEmail("test@email.address").withPhoto(photo);
 
     app.goTo().homePage();
     Contacts before = app.contact().all();
