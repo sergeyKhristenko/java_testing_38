@@ -1,29 +1,24 @@
 [
   {
-    "name": "First Name 0",
+    "firstName": "First Name 0",
     "lastName": "Last Name 0",
     "address": "Address 0",
     "homePhone": "5555550",
     "mobilePhone": "+7 (123) 23-23-0",
     "workPhone": "234(2340)",
-    "email": "test0@email.address"
+    "email": "test0@email.address",
+    "email2": "test1@email.address",
+    "email3": "test2@email.address"
   },
   {
-    "name": "First Name 1",
+    "firstName": "First Name 1",
     "lastName": "Last Name 1",
     "address": "Address 1",
     "homePhone": "5555551",
     "mobilePhone": "+7 (123) 23-23-1",
     "workPhone": "234(2341)",
-    "email": "test1@email.address"
-  },
-  {
-    "name": "First Name 2",
-    "lastName": "Last Name 2",
-    "address": "Address 2",
-    "homePhone": "5555552",
-    "mobilePhone": "+7 (123) 23-23-2",
-    "workPhone": "234(2342)",
-    "email": "test2@email.address"
+    "email": "test1@email.address",
+    "email2": "test2@email.address",
+    "email3": "test3@email.address"
   }
 ]

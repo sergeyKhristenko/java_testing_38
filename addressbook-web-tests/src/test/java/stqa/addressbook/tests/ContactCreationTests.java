@@ -44,11 +44,11 @@ public class ContactCreationTests extends TestBase {
     System.out.println(photo.exists());
 
     app.goTo().homePage();
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
 
-    app.contact().createContact(contact);
+    app.contact().createContact(contact.withPhoto(photo));
     app.goTo().homePage();
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
 
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     assertThat(after, equalTo(before.withAdded(contact

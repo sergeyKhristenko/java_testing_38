@@ -64,7 +64,9 @@ public class ContactDataGenerator {
               .withHomePhone(String.format("555555%s", i))
               .withMobilePhone(String.format("+7 (123) 23-23-%s", i))
               .withWorkPhone(String.format("234(234%s)", i))
-              .withEmail(String.format("test%s@email.address", i)));
+              .withEmail(String.format("test%s@email.address", i))
+              .withEmail2(String.format("test%s@email.address", i+1))
+              .withEmail3(String.format("test%s@email.address", i+2)));
     }
     return contacts;
   }
