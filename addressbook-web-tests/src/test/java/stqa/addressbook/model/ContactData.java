@@ -1,39 +1,81 @@
 package stqa.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
+  @Id
+  @Column(name = "id")
   private int id = Integer.MAX_VALUE;
+
   @Expose
-  private String name;
+  @Column(name = "firstname")
+  private String firstName;
+
   @Expose
+  @Column(name = "lastname")
   private String lastName;
+
+  @Transient
   private String concatNames;
+
   @Expose
+  @Column(name = "address")
+  @Type(type = "text")
   private String address;
+
   @Expose
+  @Column(name = "home")
+  @Type(type = "text")
   private String homePhone;
+
   @Expose
+  @Column(name = "mobile")
+  @Type(type = "text")
   private String mobilePhone;
+
   @Expose
+  @Column(name = "work")
+  @Type(type = "text")
   private String workPhone;
+
+  @Transient
   private String allPhones;
+
   @Expose
+  @Column(name = "email")
+  @Type(type = "text")
   private String email;
+
+  @Column(name = "email2")
+  @Type(type = "text")
   private String email2;
+
+  @Column(name = "email3")
+  @Type(type = "text")
   private String email3;
+
+  @Transient
   private String allEmails;
+
+  @Transient
   private String group;
-  private File photo;
+
+  @Column(name = "photo")
+  @Type(type = "text")
+  private String photo;
 
   public File getPhoto() {
-    return photo;
+    return new File(photo);
   }
 
   public ContactData withPhoto(File photo) {
-    this.photo = photo;
+    this.photo = photo.getPath();
     return this;
   }
 
@@ -64,8 +106,8 @@ public class ContactData {
     return this;
   }
 
-  public String getName() {
-    return name;
+  public String getFirstName() {
+    return firstName;
   }
 
   public String getConcatNames() {
@@ -91,7 +133,7 @@ public class ContactData {
   }
 
   public ContactData withName(String name) {
-    this.name = name;
+    this.firstName = name;
     return this;
   }
 
@@ -168,7 +210,7 @@ public class ContactData {
   public String /**/toString() {
     return "ContactData{" +
             "id=" + id +
-            ", name='" + name + '\'' +
+            ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", address='" + address + '\'' +
             ", homePhone='" + homePhone + '\'' +
@@ -187,7 +229,7 @@ public class ContactData {
     ContactData that = (ContactData) o;
 
     if (id != that.id) return false;
-    if (name != null ? !name.equals(that.name) : that.name != null) return false;
+    if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
     if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
 
     return true;
@@ -196,7 +238,7 @@ public class ContactData {
   @Override
   public int hashCode() {
     int result = id;
-    result = 31 * result + (name != null ? name.hashCode() : 0);
+    result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
     result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
     return result;
   }

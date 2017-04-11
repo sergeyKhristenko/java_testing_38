@@ -1,12 +1,9 @@
 package stqa.addressbook.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import stqa.addressbook.model.ContactData;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,7 +34,7 @@ public class ContactDetailedTest extends TestBase {
     ContactData detailedPage = app.contact().infoFromDetailedPage(contact);
 
     //assert names
-    assertThat(mergeNames(editPage.getName(), editPage.getLastName()),
+    assertThat(mergeNames(editPage.getFirstName(), editPage.getLastName()),
             equalTo(detailedPage.getConcatNames()));
     //assert phones
     assertThat(editPage.getHomePhone(), equalTo(detailedPage.getHomePhone()));
