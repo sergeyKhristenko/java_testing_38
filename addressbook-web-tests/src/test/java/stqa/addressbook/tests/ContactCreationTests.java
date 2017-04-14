@@ -41,7 +41,6 @@ public class ContactCreationTests extends TestBase {
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) {
     File photo = new File("src/test/resources/home-icon.png");
-    System.out.println(photo.exists());
 
     app.goTo().homePage();
     Contacts before = app.db().contacts();
@@ -53,5 +52,9 @@ public class ContactCreationTests extends TestBase {
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     assertThat(after, equalTo(before.withAdded(contact
             .withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+
+    verifyContactListInUI();
   }
+
+
 }
