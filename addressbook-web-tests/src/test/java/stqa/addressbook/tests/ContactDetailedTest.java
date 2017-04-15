@@ -20,8 +20,7 @@ public class ContactDetailedTest extends TestBase {
               .withLastName("Last Name")
               .withAddress("Address")
               .withHomePhone("555555").withMobilePhone("+7 (123) 23-23-232").withWorkPhone("234(234)")
-              .withEmail("test@email.address").withEmail2("test+2@email.address").withEmail3("test+3@email.address")
-              .withGroup("Test Group"));
+              .withEmail("test@email.address").withEmail2("test+2@email.address").withEmail3("test+3@email.address"));
     }
   }
 

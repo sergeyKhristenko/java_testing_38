@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import stqa.addressbook.model.ContactData;
 import stqa.addressbook.model.Contacts;
+import stqa.addressbook.model.GroupData;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,26 +35,37 @@ public class ContactHelper extends BaseHelper {
     type(By.name("mobile"), contactData.getMobilePhone());
     type(By.name("work"), contactData.getWorkPhone());
 
+    if (creation) {
+      if (contactData.getGroups().size() > 0) {
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+        try {
+          new Select(wd.findElement(By.name("new_group")))
+                  .selectByVisibleText(contactData.getGroups().iterator().next().getName());
+        } catch (NoSuchElementException | NullPointerException ex) {
+          return;
+        }
+      }
+    } else {
+      Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
+
     try {
       attach(By.name("photo"), contactData.getPhoto());
     } catch (NullPointerException ex) {
       return;
     }
 
-    if (creation) {
-      try {
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-      } catch (NoSuchElementException | NullPointerException ex) {
-        return;
-      }
-    } else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
-    }
-
   }
 
   public void addContact() {
     click(By.linkText("add new"));
+  }
+
+  public void addContactIntoGroup(ContactData contact, GroupData group) {
+    selectContactById(contact.getId());
+    new Select(wd.findElement(By.name("to_group")))
+            .selectByVisibleText(group.getName());
+    wd.findElement(By.name("add")).click();
   }
 
   //will select contact by index
@@ -102,7 +114,6 @@ public class ContactHelper extends BaseHelper {
     selectContactById(contact.getId());
     deleteSelectedContact();
     contactCache = null;
-
   }
 
   public int count() {
