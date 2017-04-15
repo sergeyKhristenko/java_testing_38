@@ -8,7 +8,6 @@ import stqa.addressbook.model.GroupData;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AddContactIntoGroupTest extends TestBase {
