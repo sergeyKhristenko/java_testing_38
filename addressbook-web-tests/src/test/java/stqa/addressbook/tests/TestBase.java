@@ -59,7 +59,6 @@ public class TestBase {
 
   public void verifyContactListInUI() {
     if (Boolean.getBoolean("verifyUI")) {
-      System.out.println("\n\n==||||||||||||||||||||||||||||==\n\n");
       Contacts dbContacts = app.db().contacts();
       Contacts uiContacts = app.contact().all();
       assertThat(uiContacts, equalTo(dbContacts.stream()
