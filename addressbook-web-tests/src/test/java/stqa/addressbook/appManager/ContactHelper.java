@@ -11,6 +11,7 @@ import stqa.addressbook.model.Contacts;
 import stqa.addressbook.model.GroupData;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -66,6 +67,15 @@ public class ContactHelper extends BaseHelper {
     new Select(wd.findElement(By.name("to_group")))
             .selectByVisibleText(group.getName());
     wd.findElement(By.name("add")).click();
+  }
+
+  public void removeContactFromGroup(ContactData contact, GroupData group) {
+    new Select(wd.findElement(By.name("group")))
+            .selectByVisibleText(group.getName());
+
+//    wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+    selectContactById(contact.getId());
+    wd.findElement(By.name("remove")).click();
   }
 
   //will select contact by index

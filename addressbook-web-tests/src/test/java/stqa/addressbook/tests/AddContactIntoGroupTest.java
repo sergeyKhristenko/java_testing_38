@@ -43,8 +43,7 @@ public class AddContactIntoGroupTest extends TestBase {
             .collect(Collectors.toList())
             .iterator().next(); //there must be only one contact, because id's are unique
 
-    //hasItem because the contact could be included into more then one group
-    assertThat(contactAfter.getGroups(), hasItem(group));
+    assertThat(contactAfter.getGroups(), equalTo(contactBefore.getGroups().withAdded(group)));
   }
 
   @Test
