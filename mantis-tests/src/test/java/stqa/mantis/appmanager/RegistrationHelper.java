@@ -1,30 +1,38 @@
 package stqa.mantis.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import stqa.mantis.tests.TestBase;
+import ru.lanwen.verbalregex.VerbalExpression;
+import stqa.mantis.model.MailMessage;
 
-public class RegistrationHelper {
-  private final ApplicationManager app;
-  private WebDriver wd;
+import java.util.List;
+
+public class RegistrationHelper extends BaseHelper {
 
   public RegistrationHelper(ApplicationManager app) {
-    this.app = app;
-    wd = app.getDriver();
+    super(app);
   }
 
   public void start(String username, String email) {
-    wd.get(app.getProperty("web.baseUrl") + "/signup_page.php");
-    wd.findElement(By.name("username")).sendKeys(username);
-    wd.findElement(By.name("email")).sendKeys(email);
-    wd.findElement(By.cssSelector("input[type='submit']")).click();
+    wd.get(app.getProperty("web.baseUrl") + "signup_page.php");
+    type(By.name("username"), username);
+    type(By.name("email"), email);
+    click(By.cssSelector("input[type='submit']"));
 
   }
 
   public void finish(String confirmationLink, String password) {
     wd.get(confirmationLink);
-    wd.findElement(By.name("password")).sendKeys(password);
-    wd.findElement(By.name("password_confirm")).sendKeys(password);
-    wd.findElement(By.cssSelector("button[type='submit']")).click();
+    type(By.name("password"), password);
+    type(By.name("password_confirm"), password);
+    click(By.cssSelector("button[type='submit']"));
+  }
+
+  public String findConfirmationLink(List<MailMessage> mailMessages, String email) {
+    //this will use the last email to avoid possible coincidence
+    MailMessage mailMessage = mailMessages.stream().filter(m -> m.to.equals(email))
+            .reduce((a, b) -> b).get();
+    VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
+
+    return regex.getText(mailMessage.text);
   }
 }

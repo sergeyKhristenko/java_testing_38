@@ -20,25 +20,19 @@ public class RegistrationTests extends TestBase {
 
   @Test
   public void testRegistration() throws IOException {
-    String email = "user" + Math.round(Math.random()*1000) + "@localhost";
-    String user = "Test User " + Math.round(Math.random()*1000);
+    long random = Math.round(Math.random() * 1000);
+    String email = "user" + random + "@localhost";
+    String user = "Test User " + random;
     String password = "password";
 
     app.registration().start(user, email);
     List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
 
-    String confirmationLink = findConfirmationLink(mailMessages, email);
+    String confirmationLink = app.registration().findConfirmationLink(mailMessages, email);
     app.registration().finish(confirmationLink, password);
 
     assertTrue(app.newSession().login(user, password));
   }
-
-  private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
-    MailMessage mailMessage = mailMessages.stream().filter(m -> m.to.equals(email)).findFirst().get();
-    VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
-    return regex.getText(mailMessage.text);
-  }
-
 
   @AfterMethod(alwaysRun = true)
   public void stopMailServer() {
