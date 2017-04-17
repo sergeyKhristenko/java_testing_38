@@ -13,7 +13,7 @@ import static org.testng.Assert.assertTrue;
 
 public class RegistrationTests extends TestBase {
 
-  @BeforeMethod
+  //  @BeforeMethod
   public void startMailServer() {
     app.mail().start();
   }
@@ -25,16 +25,18 @@ public class RegistrationTests extends TestBase {
     String user = "Test User " + random;
     String password = "password";
 
+    app.james().createUser(user, password);
     app.registration().start(user, email);
-    List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+//    List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
 
+    List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);
     String confirmationLink = app.registration().findConfirmationLink(mailMessages, email);
     app.registration().finish(confirmationLink, password);
 
     assertTrue(app.newSession().login(user, password));
   }
 
-  @AfterMethod(alwaysRun = true)
+  //  @AfterMethod(alwaysRun = true)
   public void stopMailServer() {
     app.mail().stop();
   }
