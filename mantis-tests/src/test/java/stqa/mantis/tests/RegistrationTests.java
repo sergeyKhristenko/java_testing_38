@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 import stqa.mantis.model.MailMessage;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,10 +20,10 @@ public class RegistrationTests extends TestBase {
   }
 
   @Test
-  public void testRegistration() throws IOException {
+  public void testRegistration() throws IOException, MessagingException {
     long random = Math.round(Math.random() * 1000);
     String email = "user" + random + "@localhost";
-    String user = "Test User " + random;
+    String user = "user" + random;
     String password = "password";
 
     app.james().createUser(user, password);
