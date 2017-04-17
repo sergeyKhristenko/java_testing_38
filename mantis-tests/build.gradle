@@ -13,10 +13,10 @@ dependencies {
     compile 'ru.lanwen.verbalregex:java-verbal-expressions:1.4'
     compile 'org.hibernate:hibernate-core:5.2.9.Final'
     compile 'mysql:mysql-connector-java:6.0.6'
-
+    compile 'biz.futureware.mantis:mantis-axis-soap-client:1.2.19'
 }
 
-task {
+test {
     useTestNG {
         suites 'src/test/resources/testng.xml'
     }
