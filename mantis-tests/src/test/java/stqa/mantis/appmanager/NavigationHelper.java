@@ -19,13 +19,11 @@ public class NavigationHelper extends BaseHelper {
   }
 
   //admin login
-  public void login() {
-    type(By.name("username"), app.getProperty("web.adminLogin"));
-    type(By.name("password"), app.getProperty("web.adminPassword"));
-    click(By.cssSelector("input[type='submit']"));
+  public void loginAdmin() {
+    this.login(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"));
   }
 
-  public void homePage(){
+  public void homePage() {
     wd.get(app.getProperty("web.baseUrl"));
   }
 

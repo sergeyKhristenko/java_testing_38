@@ -33,7 +33,7 @@ public class ChangeUsersPasswordTest extends TestBase {
       app.navigationHelper().homePage();
     }
 
-    app.navigationHelper().login(); //log in as admin
+    app.navigationHelper().loginAdmin();
   }
 
   @Test
