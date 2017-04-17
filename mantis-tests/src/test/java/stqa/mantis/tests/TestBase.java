@@ -8,6 +8,7 @@ import org.testng.SkipException;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import stqa.mantis.appmanager.ApplicationManager;
+import stqa.mantis.model.BugifyIssue;
 
 import javax.xml.rpc.ServiceException;
 import java.io.File;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.util.Set;
 
 public class TestBase {
 
@@ -49,6 +51,21 @@ public class TestBase {
     boolean isOpen = !(isResolved || isFixed); //just to make it more readable
 
     return isOpen;
+  }
+
+  public void skipIfNotFixedBugify(int issueId) throws IOException {
+    if (isBugifyIssueOpen(issueId)) {
+      throw new SkipException("Ignored because of issue " + issueId);
+    }
+  }
+
+  boolean isBugifyIssueOpen(int issueId) throws IOException {
+    Set<BugifyIssue> issue = app.rest().getIssue(issueId);
+    String issueStatus = issue.iterator().next().getState_name();
+
+    boolean isClosed = issueStatus.equals("Resolved") || issueStatus.equals("Closed");
+
+    return !isClosed;
   }
 
 }
