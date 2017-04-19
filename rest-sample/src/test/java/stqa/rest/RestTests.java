@@ -21,13 +21,26 @@ public class RestTests {
 
   @Test
   public void testCreateIssue() throws IOException {
-    Set<Issue> oldIssues = getIssues();
-    Issue newIssue = new Issue().withSubject("Test Issue").withDescription("New Issue");
-    int issueId = createIssue(newIssue);
-    Set<Issue> newIssues = getIssues();
-    oldIssues.add(newIssue.withId(issueId));
-    assertEquals(newIssues, oldIssues);
+//    Set<Issue> oldIssues = getIssues();
+//    Issue newIssue = new Issue().withSubject("Test Issue").withDescription("New Issue");
+//    int issueId = createIssue(newIssue);
+//    Set<Issue> newIssues = getIssues();
+//    oldIssues.add(newIssue.withId(issueId));
+//    assertEquals(newIssues, oldIssues);
+
+  resolveIssue();
   }
+
+  //I don't know why it's doesn't work
+  public void resolveIssue() throws IOException {
+    getExecutor().execute(Request.Post("http://demo.bugify.com/api/issues/2.json")
+            .bodyForm(new BasicNameValuePair("method", "update"))
+            .bodyForm(new BasicNameValuePair("issue[state]", "2")))
+            .returnContent();
+  }
+
+
+
 
   private int createIssue(Issue newIssue) throws IOException {
     String json = getExecutor().execute(Request.Post("http://demo.bugify.com/api/issues.json")
