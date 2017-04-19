@@ -1,5 +1,6 @@
 package stqa.addressbook.appManager;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -51,6 +52,7 @@ public class ApplicationManager {
     contactHelper = new ContactHelper(wd);
 
     sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
+    wd.manage().window().setSize(new Dimension(1024,768));
   }
 
 
